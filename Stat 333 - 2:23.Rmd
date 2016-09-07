@@ -1,0 +1,45 @@
+---
+title: "Stat 333 - 2/23"
+author: "Tess Steplyk"
+date: "February 22, 2016"
+output: html_document
+---
+
+###ISLR 4.7.6 
+Suppose we collect data for a group of students in a statistics class with variables X1 = hours studied, X2 = undergrad GPA, and Y = receive an A. We fit a logistic regression and produce estimated co- efficients, βˆ0 = −6, βˆ1 = 0.05, βˆ2 = 1.
+\
+(a) Estimate the probability that a student who studies for 40 hours and has an undergrad GPA of 3.5 gets an A in the class.
+\
+Equation 4.2
+```{r}
+βo = -6
+βl = 0.05
+Xl = 40
+X2 = 3.5
+pX = (exp(βo + βl*Xl + X2))/(1 + exp(βo + βl*Xl + X2))
+pX
+```
+***The probability is about 38%.***
+\
+(b) How many hours would the student in part (a) need to study to have a 50% chance of getting an A in the class?
+\
+***FIND XX. \
+.5 = (exp(βo + βl*XX + X2))/(1 + exp(βo + βl*XX + X2)) \
+1 = exp(βo + βl*XX + X2) \
+XX = 2.5/.05 \
+XX = 50***
+\
+
+
+###ISLR 4.7.7.
+Suppose that we wish to predict whether a given stock will issue a dividend this year (“Yes” or “No”) based on X, last year’s percent profit. We examine a large number of companies and discover that the mean value of X for companies that issued a dividend was X ̄ = 10, while the mean for those that didn’t was X ̄ = 0. In addition, the variance of X for these two sets of companies was σˆ2 = 36. Finally, 80% of companies issued dividends. Predict the probability that a company will issue a dividend this year given that its percentage return was X = 4 last year.
+\
+Equation 4.12
+It suffices to plug in the parameters and XX values in the equation for pk(x)pk(x). We get
+so the probability that a company will issue a dividend this year given that its percentage return was X=4X=4 last year is 0.7520.752.
+
+```{r}
+pl = (0.8 * exp(-((1/72)*36))) / (0.8 * exp(-((1/72)*36)) + 0.2 * exp(-((1/72)*16)))
+pl
+```
+***The probability a company will issue a dividend this year given its percentage return was X=4 last year is 0.752, or 75.2%.***

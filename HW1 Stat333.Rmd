@@ -1,0 +1,119 @@
+---
+title: "HW1 Stat333"
+author: "Tess Steplyk"
+date: "January 26, 2016"
+output: html_document
+---
+***
+
+###ALR 1.2
+
+####1.2. Mitchell data The data shown in Figure 1.12 give average soil temperature in degrees C at 20 cm depth in Mitchell, Nebraska, for 17 years beginning January 1976, plotted versus the month number. The data were collected by K. Hubbard and provided by O. Burnside.
+
+##### 1.2.1. Summarize the information in the graph about the dependence of soil temperature on month number.
+There seems to be no dependence of soil temperature on the month number.
+
+##### 1.2.2.
+```{r}
+library(alr3)
+data(Mitchell)
+attach(Mitchell)
+par(mar = c(12, .5, 3, .5))
+plot(Month, Temp, main="Mitchell", xlab="Month ", ylab="Temp ", pch=19)
+```
+There is still minimum dependence of soil temperature on the month number.
+
+
+***
+
+###ISLR 2.4.1, 2.4.2, 2.4.8
+
+#### 1. For each of parts (a) through (d), indicate whether i. or ii. is correct, and explain your answer. In general, do we expect the performance of a flexible statistical learning method to perform better or worse than an inflexible method when:
+##### (a) The sample size n is extremely large, and the number of predictors p is small?
+With a lot of data, a flexible statistical learning method is better.
+##### (b) The number of predictors p is extremely large, and the number of observations n is small?
+Worse because with a small n inflexible is best because too many predictors will cause an overfitting. 
+##### (c) The relationship between the predictors and response is highly non-linear?
+More flexible would be better because an inflexible method will underfit an already non-linear relationship.
+##### (d) The variance of the error terms, i.e. σ2 = Var(ǫ), is extremely high?
+An inflexible method would work best because with a high error rate might cause overfitting with a more flexible method. Therefore, the flexible method would be worse.
+
+
+
+#### 2. Explain whether each scenario is a classification or regression problem, and indicate whether we are most interested in inference or prediction. Finally, provide n and p.
+##### (a) We collect a set of data on the top 500 firms in the US. For each firm we record profit, number of employees, industry and the CEO salary. We are interested in understanding which factors affect CEO salary.
+Regression
+Inference
+n = 500, p = 3
+
+##### (b) We are considering launching a new product and wish to know whether it will be a success or a failure. We collect data on 20 similar products that were previously launched. For each product we have recorded whether it was a success or failure, price charged for the product, marketing budget, competition price, and ten other variables.
+Classification
+Prediction
+n = 20, p = 13
+
+##### (c) We are interesting in predicting the % change in the US dollar in relation to the weekly changes in the world stock markets. Hence we collect weekly data for all of 2012. For each week we record the % change in the dollar, the % change in the US market, the % change in the British market, and the % change in the German market.
+Regression
+Prediction
+n = 52, p = 3
+
+
+
+#### 8. This exercise relates to the College data set, which can be found in the file College.csv. It contains a number of variables for 777 different universities and colleges in the US.
+
+(a) 
+
+```{r}
+college <- read.csv("/Users/TessSteplyk/Documents/College.csv", header = TRUE, sep = ",")
+```
+
+(b)
+```{r}
+head(college[, 1:5])
+```
+
+```{r}
+rownames <- college[, 1]
+college <- college[, -1]
+head(college[, 1:5])
+```
+
+
+(c)
+
+i.
+```{r}
+summary(college)
+```
+
+ii.
+```{r}
+pairs(college[, 1:10])
+```
+
+iii.
+```{r}
+boxplot(college$Outstate ~ college$Private, main = "Outstate versus Private", xlab = "Private", ylab = "Outstate")
+```
+
+iv.
+```{r}
+Elite <- rep("No", nrow(college))
+Elite[college$Top10perc > 50] <- "Yes"
+Elite <- as.factor(Elite)
+college$Elite <- Elite
+summary(college$Elite)
+```
+
+v.
+```{r}
+par(mfcol = c(2, 3))
+hist(college$Books, breaks = 2, freq = TRUE, main = "Histogram", xlab = "Books", ylab = "Value")
+hist(college$Accept, breaks = 10, freq = TRUE, main = "Histogram", xlab = "Accept", ylab = "Value")
+hist(college$Enroll, breaks = 6, freq = TRUE, main = "Histogram", xlab = "Enroll", ylab = "Value")
+hist(college$Top10perc, breaks = 8, freq = TRUE, main = "Histogram", xlab = "Top10perc", ylab = "Value")
+```
+
+vi.
+Most top 10 percents are accepted no matter the school or other features.
+Out of state and in state do not affect the new students class ranking.
+Many more full time applications are put in than part time.
